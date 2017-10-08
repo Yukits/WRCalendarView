@@ -13,6 +13,7 @@ class WRCurrentTimeGridline: UICollectionReusableView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = WRCurrentTimeGridline.color
+        isHidden = WRCurrentTimeIndicator.hidden
     }
     
     required init?(coder aDecoder: NSCoder) {

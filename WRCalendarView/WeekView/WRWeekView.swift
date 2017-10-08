@@ -162,10 +162,6 @@ public class WRWeekView: UIView {
         flowLayout.invalidateLayoutCache()
         collectionView.reloadData()
     }
-    
-    public func jumpTo(date: Date){
-        self.flowLayout.scrollCollectionViewToCurrentTime(date)
-    }
 
     // MARK: - private actions
     //  Get date from point
@@ -413,10 +409,51 @@ extension WRWeekView: UICollectionViewDelegate, UICollectionViewDataSource {
             loadNextPage()
         }
     }
+}
+
+extension WRWeekView: WRWeekViewFlowLayoutDelegate {
+    func collectionView(_ collectionView: UICollectionView, layout: WRWeekViewFlowLayout, dayForSection section: Int) -> Date {
+        let date = initDate + section.days
+        return date
+    }
     
+    func collectionView(_ collectionView: UICollectionView, layout: WRWeekViewFlowLayout, startTimeForItemAtIndexPath indexPath: IndexPath) -> Date {
+        let date = flowLayout.dateForColumnHeader(at: indexPath)
+        let key = dateFormatter.string(from: date)
+
+        if let events = eventBySection[key] {
+            let event = events[indexPath.item]
+            return event.beginning!
+        } else {
+            fatalError()
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout: WRWeekViewFlowLayout, endTimeForItemAtIndexPath indexPath: IndexPath) -> Date {
+        let date = flowLayout.dateForColumnHeader(at: indexPath)
+        let key = dateFormatter.string(from: date)
+        
+        if let events = eventBySection[key] {
+            let event = events[indexPath.item]
+            return event.end!
+        } else {
+            fatalError()
+        }
+    }
+}
+
+extension WRWeekView {
     //Operate collectionView
     public func enableScrollCalendar(_ bool: Bool){
         self.collectionView.isScrollEnabled = bool
+    }
+    
+    public func jumpTo(date: Date){
+        self.flowLayout.scrollCollectionViewToCurrentTime(date)
+    }
+    
+    public func hideCurrentTimeIndicator(_ bool: Bool){
+        WRCurrentTimeIndicator.hidden = bool
     }
     
     //Setting Colors
@@ -468,36 +505,16 @@ extension WRWeekView: UICollectionViewDelegate, UICollectionViewDataSource {
         WRColumnHeader.color = color
         WRColumnHeader.today = today
     }
-}
-
-extension WRWeekView: WRWeekViewFlowLayoutDelegate {
-    func collectionView(_ collectionView: UICollectionView, layout: WRWeekViewFlowLayout, dayForSection section: Int) -> Date {
-        let date = initDate + section.days
-        return date
+    
+    //event color
+    public func setEventColor(_ color: UIColor, selected: UIColor) {
+        WREventCell.color = color
+        WREventCell.selectedColor = selected
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout: WRWeekViewFlowLayout, startTimeForItemAtIndexPath indexPath: IndexPath) -> Date {
-        let date = flowLayout.dateForColumnHeader(at: indexPath)
-        let key = dateFormatter.string(from: date)
-
-        if let events = eventBySection[key] {
-            let event = events[indexPath.item]
-            return event.beginning!
-        } else {
-            fatalError()
-        }
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout: WRWeekViewFlowLayout, endTimeForItemAtIndexPath indexPath: IndexPath) -> Date {
-        let date = flowLayout.dateForColumnHeader(at: indexPath)
-        let key = dateFormatter.string(from: date)
-        
-        if let events = eventBySection[key] {
-            let event = events[indexPath.item]
-            return event.end!
-        } else {
-            fatalError()
-        }
+    public func setEventTextColor(_ text: UIColor, selected: UIColor) {
+        WREventCell.textColor = text
+        WREventCell.selectedTextColor = selected
     }
 }
 

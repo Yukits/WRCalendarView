@@ -26,8 +26,17 @@ class MainCont: UIViewController {
         weekView.setIndicatorColor(.green, grid: .gray, text: .white)
         weekView.setDayBackGroundColor(color: .green, today: .white)
         weekView.setDayColor(basic: .black, sat: .red, sun: .blue, today: .brown, weekday: .yellow)
+        weekView.hideCurrentTimeIndicator(true)
+        weekView.setEventColor(.green, selected: .gray)
+        weekView.setEventTextColor(.black, selected: .white)
         
         setupCalendarData()
+        
+        DispatchQueue.main.async {
+            let calendar = Calendar.current
+            let date = calendar.date(from: DateComponents(year: 2017, month: 5, day: 12, hour: 23, minute: 15, second: 46))!
+            self.weekView.jumpTo(date: date)
+        }
         
         let title = prepareNavigationBarMenuTitleView()
         prepareNavigationBarMenu(title)
@@ -53,10 +62,9 @@ class MainCont: UIViewController {
     }
     
     func moveToToday() {
+        weekView.setCalendarDate(Date(), animated: true)
         let calendar = Calendar.current
         let date = calendar.date(from: DateComponents(year: 2017, month: 5, day: 12, hour: 23, minute: 15, second: 46))!
-        //let dateFromComps2 = calendar.date(from: DateComponents(year: 2017, month: 5, day: 12, hour: 23, minute: 15, second: 46))
-//        weekView.setCalendarDate(Date(), animated: true)
         weekView.jumpTo(date: date)
     }
     

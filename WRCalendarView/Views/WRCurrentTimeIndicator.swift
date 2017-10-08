@@ -20,6 +20,7 @@ class WRCurrentTimeIndicator: UICollectionReusableView {
         RunLoop.current.add(timer, forMode: .defaultRunLoopMode)
         timeLbl.backgroundColor = WRCurrentTimeIndicator.color
         timeLbl.textColor = WRCurrentTimeIndicator.textColor
+        isHidden = WRCurrentTimeIndicator.hidden
         
         updateTimer()
     }
@@ -30,4 +31,5 @@ class WRCurrentTimeIndicator: UICollectionReusableView {
     
     static var color :UIColor = .white
     static var textColor: UIColor = .red
+    static var hidden: Bool = false
 }
