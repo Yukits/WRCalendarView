@@ -27,21 +27,21 @@ class WRColumnHeader: UICollectionReusableView {
                 
                 dayLbl.text = String(calendar.component(.day, from: date))
                 weekdayLbl.text = dateFormatter.shortWeekdaySymbols[weekday].uppercased()
-                weekdayLbl.textColor = UIColor(hexString: "333333")
+                weekdayLbl.textColor = WRColumnHeader.weekdayLabel
                 
                 if date.isSameDay(date: Date()) {
-                    dayLbl.textColor = UIColor(hexString: "1398f2")
-                    backgroundColor = UIColor(hexString: "f5f8fd")
+                    dayLbl.textColor = WRColumnHeader.todayLabel
+                    backgroundColor = WRColumnHeader.today
                 } else {
                     switch weekday {
                     case 0: // sunday
-                        dayLbl.textColor = UIColor(hexString: "fe4646")
+                        dayLbl.textColor = WRColumnHeader.sunLabel
                     case 6:
-                        dayLbl.textColor = UIColor(hexString: "3573ff")
+                        dayLbl.textColor = WRColumnHeader.satLabel
                     default:
-                        dayLbl.textColor = UIColor(hexString: "aaaaaa")
+                        dayLbl.textColor = WRColumnHeader.basicLabel
                     }
-                    backgroundColor = UIColor.white
+                    backgroundColor = WRColumnHeader.color
                 }
             }
         }
@@ -52,4 +52,12 @@ class WRColumnHeader: UICollectionReusableView {
         dayLbl.text = ""
         weekdayLbl.text = ""
     }
+    
+    static var sunLabel :UIColor = UIColor(hexString: "fe4646")!
+    static var satLabel :UIColor = UIColor(hexString: "3573ff")!
+    static var basicLabel :UIColor = UIColor(hexString: "aaaaaa")!
+    static var color :UIColor = .white
+    static var today :UIColor = UIColor(hexString: "f5f8fd")!
+    static var todayLabel :UIColor = UIColor(hexString: "1398f2")!
+    static var weekdayLabel :UIColor = UIColor(hexString: "333333")!
 }

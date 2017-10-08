@@ -19,7 +19,7 @@ public class WRWeekView: UIView {
     let pageCount = 7
     let dateFormatter = DateFormatter()
     
-    var collectionView: UICollectionView!
+    public private(set) var collectionView: UICollectionView!
     var flowLayout: WRWeekViewFlowLayout!
     var initDate: Date!
     var startDate: Date!
@@ -161,6 +161,10 @@ public class WRWeekView: UIView {
         }
         flowLayout.invalidateLayoutCache()
         collectionView.reloadData()
+    }
+    
+    public func jumpTo(date: Date){
+        self.flowLayout.scrollCollectionViewToCurrentTime(date)
     }
 
     // MARK: - private actions
@@ -408,6 +412,61 @@ extension WRWeekView: UICollectionViewDelegate, UICollectionViewDataSource {
         if maximumOffset - currentOffset <= diff {
             loadNextPage()
         }
+    }
+    
+    //Operate collectionView
+    public func enableScrollCalendar(_ bool: Bool){
+        self.collectionView.isScrollEnabled = bool
+    }
+    
+    //Setting Colors
+    public func setBackGroundColor(_ color: UIColor){
+        self.collectionView.backgroundColor = color
+    }
+    
+    public func setHighlightColor(_ color: UIColor){
+        WRTodayBackground.color = color
+    }
+    
+    public func setColumnHeaderColor(_ color: UIColor){
+        WRColumnHeaderBackground.color = color
+    }
+    
+    public func setRowHeaderColor(_ color: UIColor, text: UIColor){
+        WRRowHeaderBackground.color = color
+        WRRowHeader.timeLabelColor = color
+        WRRowHeader.textColor = text
+    }
+    
+    public func setCornerColor(_ color: UIColor){
+        WRCornerHeader.color = color
+    }
+    
+    public func setIndicatorColor(_ color: UIColor, grid: UIColor, text: UIColor){
+        WRCurrentTimeIndicator.color = color
+        WRCurrentTimeGridline.color = grid
+        WRCurrentTimeIndicator.textColor = text
+    }
+    
+    public func setGridLineColor(_ color: UIColor){
+        WRGridLine.color = color
+    }
+    
+    public func setDayColor(basic: UIColor = UIColor(hexString: "aaaaaa")!,
+                            sat: UIColor = UIColor(hexString: "3573ff")!,
+                            sun: UIColor = UIColor(hexString: "fe4646")!,
+                            today: UIColor = UIColor(hexString: "1398f2")!,
+                            weekday: UIColor = UIColor(hexString: "333333")!){
+        WRColumnHeader.basicLabel = basic
+        WRColumnHeader.satLabel = sat
+        WRColumnHeader.sunLabel = sun
+        WRColumnHeader.todayLabel = today
+        WRColumnHeader.weekdayLabel = weekday
+    }
+    
+    public func setDayBackGroundColor(color: UIColor = .white, today: UIColor = UIColor(hexString: "f5f8fd")!){
+        WRColumnHeader.color = color
+        WRColumnHeader.today = today
     }
 }
 

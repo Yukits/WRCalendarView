@@ -19,6 +19,14 @@ class MainCont: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        weekView.setHighlightColor(.green)
+        weekView.setBackGroundColor(.gray)
+        weekView.setRowHeaderColor(.gray, text: .black)
+        weekView.setCornerColor(.blue)
+        weekView.setIndicatorColor(.green, grid: .gray, text: .white)
+        weekView.setDayBackGroundColor(color: .green, today: .white)
+        weekView.setDayColor(basic: .black, sat: .red, sun: .blue, today: .brown, weekday: .yellow)
+        
         setupCalendarData()
         
         let title = prepareNavigationBarMenuTitleView()
@@ -45,7 +53,11 @@ class MainCont: UIViewController {
     }
     
     func moveToToday() {
-        weekView.setCalendarDate(Date(), animated: true)
+        let calendar = Calendar.current
+        let date = calendar.date(from: DateComponents(year: 2017, month: 5, day: 12, hour: 23, minute: 15, second: 46))!
+        //let dateFromComps2 = calendar.date(from: DateComponents(year: 2017, month: 5, day: 12, hour: 23, minute: 15, second: 46))
+//        weekView.setCalendarDate(Date(), animated: true)
+        weekView.jumpTo(date: date)
     }
     
     // MARK: - WRCalendarView

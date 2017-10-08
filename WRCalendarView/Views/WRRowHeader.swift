@@ -15,6 +15,8 @@ class WRRowHeader: UICollectionReusableView {
     override func awakeFromNib() {
         super.awakeFromNib()
         dateFormatter.dateFormat = "HH:mm"
+        timeLbl.backgroundColor = WRRowHeader.timeLabelColor
+        timeLbl.textColor = WRRowHeader.textColor
     }
 
     var date: Date? {
@@ -27,4 +29,7 @@ class WRRowHeader: UICollectionReusableView {
             }
         }
     }
+    
+    static var timeLabelColor :UIColor = .white
+    static var textColor :UIColor = .gray
 }

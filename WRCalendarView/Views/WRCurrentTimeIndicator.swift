@@ -18,6 +18,8 @@ class WRCurrentTimeIndicator: UICollectionReusableView {
         
         let timer = Timer(fireAt: Date() + 1.minutes, interval: TimeInterval(60), target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
         RunLoop.current.add(timer, forMode: .defaultRunLoopMode)
+        timeLbl.backgroundColor = WRCurrentTimeIndicator.color
+        timeLbl.textColor = WRCurrentTimeIndicator.textColor
         
         updateTimer()
     }
@@ -25,4 +27,7 @@ class WRCurrentTimeIndicator: UICollectionReusableView {
     func updateTimer() {
         timeLbl.text = dateFormatter.string(from: Date())
     }
+    
+    static var color :UIColor = .white
+    static var textColor: UIColor = .red
 }

@@ -8,9 +8,11 @@
 import UIKit
 
 class WRRowHeaderBackground: UICollectionReusableView {
+    static var color: UIColor = .white
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = UIColor.white
+        backgroundColor = WRRowHeaderBackground.color
 //        let gridThickness: CGFloat = UIScreen.main.scale == 2 ? 0.5 : 1.0
 //        addBorder(edge: .right, color: ColorUtil.uiColorFromHex("dadada"), borderWidth: gridThickness)
     }
